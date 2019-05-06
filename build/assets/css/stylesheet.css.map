@@ -1,0 +1,1 @@
+{"version":3,"sources":["header.sass"],"names":[],"mappings":"AACA,KAAA,KACE,OAAA,EACA,QAAA","file":"stylesheet.css","sourcesContent":["\nhtml, body {\n  margin: 0;\n  padding: 0; }\n"]}
