@@ -79,7 +79,7 @@
           content: ''
           position: absolute
           display: block
-          left: calc( 50% - 17px )
+          right: calc( 11.4rem / 2 - 22px )
           width: 0
           height: 0
           border-style: solid
@@ -106,7 +106,7 @@
           content: ''
           position: absolute
           display: block
-          left: calc( 50% - 21px )
+          right: calc(11rem / 2 - 23px)
           width: 0
           height: 0
           top: -38px
@@ -124,8 +124,11 @@
         right: -54px
         top: 65px
 
-        p
+        p, i
           padding-right: 20px
+
+      &:hover > .account_details::after
+        right: calc( 11.4rem / 2 - 26px )
 
   #mobile-nav
     padding: 10px 0
