@@ -6,7 +6,7 @@
   "dependencies": {
     "materialize-css": "^1.0.0",
     "pathmodify": "^0.5.0",
-    "react-materialize": "^3.2.1"
+    "react-materialize": "^3.2.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Global from './components/Global.jsx';
+import Header from './components/Header.jsx';
+import Errorpage from './components/Errorpage.jsx';
 
 ReactDOM.render(
-  <wrapper><Global/></wrapper>, document.getElementById('root')
+  <React.Fragment>
+    <Header/>
+    <div className="page_content">
+      <Errorpage/>
+    </div>
+  </React.Fragment>, document.getElementById('root')
 );
