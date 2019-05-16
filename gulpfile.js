@@ -57,6 +57,7 @@ function compile() {
       .pipe(source('bundle.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(plumber())       
       .pipe(uglify())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(BUILD_DIR))

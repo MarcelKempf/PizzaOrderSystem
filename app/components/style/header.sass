@@ -1,4 +1,206 @@
 
-html, body
-  margin: 0
+.section
+  color: black
+
+.switch
+  transform: scale(0.9)
+
+.site_header
   padding: 0
+  width: 100vw
+  margin-left: calc(-50vw + 50%)
+  margin-right: calc(-50vw + 50%)
+  color: black
+
+  nav
+    background-color: #fff
+
+    ul a
+      color: black
+
+  .nav-wrapper
+    max-width: 1400px
+    margin: 0 auto
+
+    .sidenav-trigger
+      color: black
+
+    .main_brand
+
+      .main_brand_logo
+        position: absolute
+        height: 100%
+        box-sizing: border-box
+        padding: 11% 0 15%
+
+      .main_brand_title
+        position: relative
+        left: 55px
+        color: black
+        font-family: 'Dancing Script', cursive
+
+    .brand_logo
+      display: none
+
+    .btn_display_account, .btn_display_site_settings
+      cursor: default
+      height: 64px
+      z-index: 10
+
+      .account_details, .setting_details
+        display: none
+        z-index: 1
+
+      &:hover > .account_details, &:hover > .setting_details
+        display: inline-block
+        position: absolute
+        right: 1px
+        top: 65px
+
+        background-color: white
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.0), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)
+
+        a:hover
+          background-color: none
+
+        .pin_drop
+          position: absolute
+
+        .location_name
+          display: flex
+          align-items: center
+          font-size: 1rem
+          line-height: 1.1rem
+
+        .setting_row, .blackTheme
+          display: inline-flex
+
+        &::after, &::before
+          content: ''
+          position: absolute
+          display: block
+          left: calc( 50% - 17px )
+          width: 0
+          height: 0
+          border-style: solid
+
+        &::after
+          top: -38px
+          border-color: transparent transparent white transparent
+          border-width: 24px
+          margin-left: -4px
+
+        &::before
+          top: -37px
+          border-color: transparent transparent rgba(0,0,0,0.12) transparent
+          border-width: 20px
+
+        .account_row
+          padding: 0 1rem
+          transition: background-color .3s
+
+        .account_row:hover
+          background-color: rgba(0,0,0,0.1)
+
+        .user::after
+          content: ''
+          position: absolute
+          display: block
+          left: calc( 50% - 21px )
+          width: 0
+          height: 0
+          top: -38px
+          border-width: 24px
+          margin-left: 0px
+          border-style: solid
+          z-index: 1
+          border-color: transparent transparent white transparent
+          transition: all .3s
+
+        .user:hover::after
+          border-color: transparent transparent #e6e6e6 transparent
+
+      &:hover > .setting_details
+        right: -54px
+        top: 65px
+
+        p
+          padding-right: 20px
+
+  #mobile-nav
+    padding: 10px 0
+
+    .brand_logo
+      height: 170px
+
+      &:hover
+        background-color: inherit
+
+      .btn_brand_logo
+        display: block
+        height: 100px
+        width: 100px
+        border: 1px solid rgb(41,40,42)
+        border-radius: 50%
+        margin: 25px auto 10px auto
+        padding: 0
+
+        .btn_brand_logo_img
+          height: 60px
+          width: 60px
+          margin: 19px 19px
+
+      .btn_brand_title
+        text-align: center
+        font-size: 2.5rem
+        font-family: 'Dancing Script', cursive
+
+    .menu_titles
+      position: absolute
+      font-family: 'Montserrat', sans-serif
+      padding: 0 0 0 16px
+      font-size: 1.6rem
+
+    .btn_display_account
+      display: inline-block
+      position: relative
+
+      .tag_name::after
+        content: 'Your Account'
+        @extend .menu_titles
+
+      .account_row
+        display: flex
+
+        .material-icons
+          align-self: center
+
+    .account_details, .setting_details
+      display: inline-block
+      padding-left: 40px
+      width: 100%
+      color: rgba(0, 0, 0, 0.6)
+
+    .setting_details
+      padding-left: 20px
+
+    .btn_display_site_settings
+      display: inline-block
+      position: relative
+      width: 100%
+
+      .tag_settings::after
+        content: 'Settings'
+        @extend .menu_titles
+
+      .setting_row
+        display: flex
+        width: 100%
+
+@media only screen and (max-width: 1400px)
+
+  .site_header .nav-wrapper .btn_display_site_settings:hover > .setting_details
+    right: 0
+
+    &::after, &::before
+      left: calc(50% + 37px)
