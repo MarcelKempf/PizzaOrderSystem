@@ -4,7 +4,7 @@ class Global extends Component {
 
   render() {
     return(
-      <h3>The Global App Component!</h3>
+      <h3>The Global App Component</h3>
     );
   }
 
