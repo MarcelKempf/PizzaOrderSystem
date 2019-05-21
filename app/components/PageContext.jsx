@@ -14,7 +14,6 @@ class PageContext extends Component {
     setTimeout(() => {
       const nav = document.querySelector('.navigation_section .page_loading');
       if(nav != null) nav.style.display = 'none';
-      console.log("Update");
     }, 50);
   }
 
