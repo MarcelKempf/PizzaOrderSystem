@@ -1,0 +1,55 @@
+.navigation_section
+
+  margin-left: calc( -50vw + 50% )
+  margin-right: calc(-50vw + 50%)
+
+  .page_loading
+    padding: 0
+    margin: 0
+    height: 4px
+
+    .col
+      height: 100%
+      padding: 0
+
+      .progress
+        margin: 0
+        background-color: #aab3b3
+
+        .indeterminate
+           background-color: #686c6c
+
+  .teal
+    display: flex
+    background-color: white !important
+    height: 2.5rem
+
+    .nav-wrapper
+      width: 100%
+      max-width: 1400px
+      margin: 0 auto
+
+      .col
+        height: 100%
+        padding: 0 1rem
+        display: inline-flex
+        overflow-x: scroll
+        scroll-behavior: smooth
+        -ms-overflow-style: none;  // IE 10+
+        scrollbar-width: none;  // Firefox
+        overflow: -moz-scrollbars-none   //Firefox older versions
+
+        &::-webkit-scrollbar
+          display: none;  // Safari and Chrome
+
+      .breadcrumb
+        display: inline-flex
+        color: black
+        line-height: 100%
+        margin: auto 0
+
+        &:before
+          color: black
+
+        &:last-child
+          padding-right: 1rem
