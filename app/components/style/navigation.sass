@@ -1,5 +1,6 @@
 .navigation_section
-
+  position: relative
+  top: 64px
   margin-left: calc( -50vw + 50% )
   margin-right: calc(-50vw + 50%)
 
@@ -53,3 +54,15 @@
 
         &:last-child
           padding-right: 1rem
+
+@media only screen and (max-width: 992px)
+
+  .navigation_section
+    position: relative
+    top: 64px
+
+@media only screen and (max-width: 600px)
+
+  .navigation_section
+    position: relative
+    top: 56px
