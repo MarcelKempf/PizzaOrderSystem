@@ -1,0 +1,12 @@
+
+  {
+    "Gluten"  : { "filterof": ["Gluten"] , "description": "Including wheat" },
+    "Lactose" : { "filterof": ["Lactose"] , "description": "In Milk" },
+    "Crustaceans" : { "filterof": ["Crustaceans"] , "description": "In Prawns, Crabs, Lobsters" },
+    "Fish" : { "filterof": ["Fish"] , "description": "All kinds of fish" },
+    "Egg" : { "filterof": ["Egg"] , "description": "" },
+    "Nuts" : { "filterof": ["Nuts"] , "description": "Including almonds, hazelnuts, walnuts, brazil nuts, cashews, pecans, pistachios and macadamia nuts" },
+    "Soybeans" : { "filterof": ["Soybeans"] , "description": "" },
+    "Vegetarian" : { "filterof": ["Meat"] , "description": "" },
+    "Vegan" : { "filterof": ["Meat", "Fish", "Egg", "Crustaceans"] , "description": "" }
+  }
