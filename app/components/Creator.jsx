@@ -1,15 +1,24 @@
-import React, { Component } from 'react';
+import React, { useContext, Component } from 'react';
+import Filter from './Filter.jsx';
+
 
 class Creator extends Component {
 
-  render(){
+  constructor(props) {
+    super(props);
+
+  }
+
+  render() {
     return(
+      <div className='creator'>
+        <Filter url="assets/database/tag_filter.json"/>
 
-        <h1>Creator</h1>
-
+      </div>
     );
   }
 
 }
+
 
 export default Creator;
