@@ -1,0 +1,238 @@
+[
+  {
+    "id": 1,
+    "name": "La'Pizza Base",
+    "price": 3.50,
+    "filterValue": ["Gluten"],
+    "category": "Basics",
+    "previewItem": {
+      "url": "assets/images/PizzaGround.png",
+      "index": 1000
+    }
+  },
+  {
+    "id": 2,
+    "name": "No-Gluten Base",
+    "price": 3.50,
+    "filterValue": [],
+    "category": "Basics",
+    "previewItem": {
+      "url": "assets/images/PizzaGround.png",
+      "index": 1000
+    }
+  },
+  {
+    "id": 3,
+    "name": "Tomato sauce",
+    "price": 0.30,
+    "filterValue": [],
+    "category": "Basics",
+    "previewItem": {
+      "url": "assets/images/TomatoSauce.png",
+      "index": 1001
+    }
+  },
+  {
+    "id": 4,
+    "name": "Hot Tomato sauce",
+    "price": 0.35,
+    "filterValue": [],
+    "category": "Basics",
+    "previewItem": {
+      "url": "assets/images/TomatoSauce.png",
+      "index": 1001
+    }
+  },
+  {
+    "id": 5,
+    "name": "Extra Herbs",
+    "price": 0.20,
+    "filterValue": [],
+    "category": "Basics",
+    "previewItem": null
+  },
+  {
+    "id": 6,
+    "name": "Pepperoni",
+    "price": 4.00,
+    "filterValue": ["Meat"],
+    "category": "Toppings",
+    "previewItem": {
+      "url": "assets/images/Salami.png",
+      "index": 1002
+    }
+  },
+  {
+    "id": 7,
+    "name": "Bacon",
+    "price": 4.00,
+    "filterValue": ["Meat"],
+    "category": "Toppings",
+    "previewItem": null
+  },
+  {
+    "id": 8,
+    "name": "Cooked Ham",
+    "price": 4.00,
+    "filterValue": ["Meat"],
+    "category": "Toppings",
+    "previewItem": null
+  },
+  {
+    "id": 9,
+    "name": "Chicken",
+    "price": 4.50,
+    "filterValue": ["Meat"],
+    "category": "Toppings",
+    "previewItem": null
+  },
+  {
+    "id": 10,
+    "name": "Spinach",
+    "price": 2.50,
+    "filterValue": [],
+    "category": "Toppings",
+    "previewItem": null
+  },
+  {
+    "id": 11,
+    "name": "Broccoli",
+    "price": 3.00,
+    "filterValue": [],
+    "category": "Toppings",
+    "previewItem": null
+  },
+  {
+    "id": 12,
+    "name": "White Onions",
+    "price": 2.00,
+    "filterValue": [],
+    "category": "Toppings",
+    "previewItem": null
+  },
+  {
+    "id": 13,
+    "name": "Red Onions",
+    "price": 2.00,
+    "filterValue": [],
+    "category": "Toppings",
+    "previewItem": null
+  },
+  {
+    "id": 14,
+    "name": "Pineapple",
+    "price": 3.40,
+    "filterValue": [],
+    "category": "On Top",
+    "previewItem": null
+  },
+  {
+    "id": 15,
+    "name": "Pine Nuts",
+    "price": 2.80,
+    "filterValue": ["Nuts"],
+    "category": "On Top",
+    "previewItem": null
+  },
+  {
+    "id": 16,
+    "name": "Prawn",
+    "price": 4.80,
+    "filterValue": ["Crustaceans", "Fish"],
+    "category": "On Top",
+    "previewItem": null
+  },
+  {
+    "id": 17,
+    "name": "Soybeans",
+    "price": 2.30,
+    "filterValue": ["Soybeans"],
+    "category": "On Top",
+    "previewItem": null
+  },
+  {
+    "id": 18,
+    "name": "Scrambled Egg",
+    "price": 3.80,
+    "filterValue": ["Egg"],
+    "category": "On Top",
+    "previewItem": null
+  },
+  {
+    "id": 20,
+    "name": "Green Pepper",
+    "price": 2.10,
+    "filterValue": [],
+    "category": "Toppings",
+    "previewItem": {
+      "url": "assets/images/GreenPepper.png",
+      "index": 1003
+    }
+  },
+  {
+    "id": 21,
+    "name": "Mozzarella",
+    "price": 2.10,
+    "filterValue": ["Lactose"],
+    "category": "Finsiher",
+    "previewItem": {
+      "url": "assets/images/Cheese.png",
+      "index": 1010
+    }
+  },
+  {
+    "id": 22,
+    "name": "Emmental",
+    "price": 2.10,
+    "filterValue": ["Lactose"],
+    "category": "Finsiher",
+    "previewItem": {
+      "url": "assets/images/Cheese.png",
+      "index": 1010
+    }
+  },
+  {
+    "id": 23,
+    "name": "Cheddar",
+    "price": 2.10,
+    "filterValue": ["Lactose"],
+    "category": "Finsiher",
+    "previewItem": {
+      "url": "assets/images/Cheese.png",
+      "index": 1010
+    }
+  },
+  {
+    "id": 24,
+    "name": "Mushrooms",
+    "price": 2.70,
+    "filterValue": [],
+    "category": "Finsiher",
+    "previewItem": {
+      "url": "assets/images/Mushrooms.png",
+      "index": 1004
+    }
+  }
+
+
+
+
+  ,
+  {
+    "id": 30,
+    "name": "Dönermeat",
+    "price": 4.40,
+    "filterValue": ["Meat"],
+    "category": "Other",
+    "previewItem": null
+  },
+  {
+    "id": 31,
+    "name": "Sour Cream",
+    "price": 2.40,
+    "filterValue": ["Lactose"],
+    "category": "Other",
+    "previewItem": null
+  }
+
+]
