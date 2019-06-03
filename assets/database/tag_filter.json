@@ -8,5 +8,5 @@
     "Nuts" : { "filterof": ["Nuts"] , "description": "Including almonds, hazelnuts, walnuts, brazil nuts, cashews, pecans, pistachios and macadamia nuts" },
     "Soybeans" : { "filterof": ["Soybeans"] , "description": "" },
     "Vegetarian" : { "filterof": ["Meat"] , "description": "" },
-    "Vegan" : { "filterof": ["Meat", "Fish", "Egg", "Crustaceans"] , "description": "" }
+    "Vegan" : { "filterof": ["Meat", "Fish", "Egg", "Crustaceans", "Lactose"] , "description": "" }
   }
