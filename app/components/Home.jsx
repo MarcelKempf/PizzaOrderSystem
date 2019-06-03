@@ -5,9 +5,11 @@ class Home extends Component {
 
   render(){
     return(
-      <div className="homepage">
-        <h1>Home</h1>
-        {buildLink('Creator', 1, 'exit_to_app')}
+      <div className="onepager">
+        <div className="homepage">
+          <h1>Build your own La'Pizza</h1>
+          {buildLink('Creator', 1, 'exit_to_app')}
+        </div>
       </div>
     );
   }

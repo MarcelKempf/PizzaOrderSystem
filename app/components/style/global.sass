@@ -47,14 +47,19 @@ body
       div
         margin: 0 auto
 
-@media only screen and (max-width: 600px)
-
-  .page_content
-    position: relative
-    top: 64px
-
 @media only screen and (max-width: 992px)
+
+  body
+    width: 90vw
 
   .page_content
     position: relative
     top: 56px
+    height: calc(100vh - 56px)
+
+@media only screen and (max-width: 600px)
+
+  .page_content
+    position: relative
+    top: 56px                  !important
+    height: calc(100vh - 56px) !important

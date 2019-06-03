@@ -1,15 +1,50 @@
+.onepager
+  overflow-y: hidden
+
+  &::after
+    content: ''
+    background-image: url('/assets/images/background_home.jpg')
+    position: absolute
+    height: 100%
+    background-size: cover
+    left: 0
+    top: 0
+    opacity: .6
+    z-index: -1
+    right: 0
+    margin-left: calc(-50vw + 50%)
+    margin-right: calc(-50vw + 50%)
+
 .homepage
   text-align: center
+  position: absolute
+  left: 50%
+  color: black
+  top: 50%
+  max-width: 100vw
+  display: grid
+  transform: translate(-50%, -50%)
+  text-shadow: 1px 2px 2px 5px black
+  padding: 1rem 5.5rem 3rem 5.5rem
+  background-color: rgba(#fff, .8)
+  box-shadow: 1px 1px 15px 1px rgba(#000, .8)
+
+  h1
+    display: inline-block
+    font-size: 3.5rem
 
   .link_Creator
     padding: 0.5rem 1rem
     border: 1px solid black
     color: black
-    display: inline-flex
+    text-shadow: 1px 2px 2px 5px black
     align-items: center
+    display: flex
+    margin: 0 auto
 
     &:hover
-      background-color: darken(#fff, 5)
+      background-color: darken(#fff, 1)
+      background-blend-mode: lighten
 
     .tag_name
       padding-right: 0.3rem
