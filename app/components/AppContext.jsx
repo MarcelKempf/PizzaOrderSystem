@@ -13,7 +13,9 @@ export class AppProvider extends Component {
   state = {
     filterData: {},
     appliedFilter: {},
-    shoppingCart: []
+    previewImg: {},
+    shoppingCart: [],
+    ingredients: []
   }
 
   getTagStatus = name => this.state.appliedFilter[name];
@@ -25,9 +27,37 @@ export class AppProvider extends Component {
       this.setState({ appliedFilter: filter });
   };
 
+  getFilter = name => this.state.filterData[name].filterof;
+
   addFilter = name => { this.setTagStatus(name, false); };
 
   toggleFilterTag = name => { this.setTagStatus(name, !this.getTagStatus(name)); };
+
+  getPreviewImgState = url => { this.state.previewImg[url] };
+
+  setPreviewImg = (url, state) => {
+    let preMap = this.state.previewImg;
+    preMap[url] = state;
+    this.setState({ previewImg: preMap });
+  };
+
+  disablePreviewImg = url => {
+    let preMap = this.state.previewImg;
+    preMap[url] = false;
+    this.setState({ previewImg: preMap });
+  };
+
+  enablePreviewImg = url => {
+    let preMap = this.state.previewImg;
+    preMap[url] = true;
+    this.setState({ previewImg: preMap });
+  };
+
+  togglePreviewImg = url => {
+    let preMap = this.state.previewImg;
+    preMap[url] = !preMap[url];
+    this.setState({ previewImg: preMap });
+  };
 
   fetchFilterData = url => {
     Loader.turnLoadingBarOn();
@@ -49,14 +79,47 @@ export class AppProvider extends Component {
       });
   };
 
+  fetchIngredientsData = url => {
+    Loader.turnLoadingBarOn();
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const entries = Object.entries(data);
+        let previewMap = this.state.previewImg;
+
+        //Generate Preview Map to save the enable/disable state of each preview image
+        for(let [index, value] of entries) {
+          if(value.previewItem !== null) {
+            previewMap[value.previewItem.url] = false;
+          }
+        }
+
+        this.setState({
+          ingredients: data,
+          previewImg: previewMap
+        });
+
+        Loader.turnLoadingBarOff();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   render(){
     return(
       <AppContext.Provider value={{
           state: this.state,
           setTagStatus: this.setTagStatus,
-          getAppliedTag: this.getAppliedTag,
+          getFilter: this.getFilter,
           getTagStatus: this.getTagStatus,
+          getPreviewImgState: this.getPreviewImgState,
+          disablePreviewImg: this.disablePreviewImg,
+          enablePreviewImg: this.enablePreviewImg,
+          setPreviewImg: this.setPreviewImg,
+          togglePreviewImg: this.togglePreviewImg,
           fetchFilter: this.fetchFilterData,
+          fetchIngredients: this.fetchIngredientsData,
           toggleFilterTag: this.toggleFilterTag
         }}>
         {this.props.children}
