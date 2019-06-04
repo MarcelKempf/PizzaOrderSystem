@@ -20,6 +20,7 @@ class Filter extends Component {
       this.context.setTagStatus(name, state);
       this.checkForIncludingTags(name, state);                                                            //Recursive!
       this.toggleTagHighlight(name);
+      this.checkForImages();
     }
   }
 
@@ -28,6 +29,29 @@ class Filter extends Component {
     this.context.state.filterData[name].filterof.forEach((filterof) => {
       if(filterof !== name) {
         this.toggleTag(filterof, null, state);
+      }
+    });
+  }
+
+  //Check for preview images which are active but through filter unchecked
+  checkForImages() {
+    let { appliedFilter, ingredients } = this.context.state;
+    const { getFilter, getPreviewImgState, disablePreviewImg } = this.context;
+    let filter = [];
+
+    Object.keys(appliedFilter).forEach((key) => {
+      if(appliedFilter[key] == true) {
+        getFilter(key).forEach((value) => { if(!filter.includes(value)) filter.push(value) });
+      }
+    });
+
+    ingredients.map((igd) => {
+      const inclItem = !igd.filterValue.some((val) =>
+        filter.includes(val)
+      );
+      if(inclItem == false) {
+        if(igd.previewItem != null && getPreviewImgState(igd.previewItem.url) != false)
+          disablePreviewImg(igd.previewItem.url);
       }
     });
   }
