@@ -17,7 +17,7 @@
     "filterValue": [],
     "category": "Basics",
     "previewItem": {
-      "url": "assets/images/PizzaGround.png",
+      "url": "assets/images/PizzaGround_1.png",
       "index": 1000
     }
   },
@@ -39,7 +39,7 @@
     "filterValue": [],
     "category": "Basics",
     "previewItem": {
-      "url": "assets/images/TomatoSauce.png",
+      "url": "assets/images/TomatoSauce_1.png",
       "index": 1001
     }
   },
@@ -123,7 +123,7 @@
     "name": "Pineapple",
     "price": 3.40,
     "filterValue": [],
-    "category": "On Top",
+    "category": "Specials",
     "previewItem": null
   },
   {
@@ -131,7 +131,7 @@
     "name": "Pine Nuts",
     "price": 2.80,
     "filterValue": ["Nuts"],
-    "category": "On Top",
+    "category": "Specials",
     "previewItem": null
   },
   {
@@ -139,7 +139,7 @@
     "name": "Prawn",
     "price": 4.80,
     "filterValue": ["Crustaceans", "Fish"],
-    "category": "On Top",
+    "category": "Specials",
     "previewItem": null
   },
   {
@@ -147,7 +147,7 @@
     "name": "Soybeans",
     "price": 2.30,
     "filterValue": ["Soybeans"],
-    "category": "On Top",
+    "category": "Specials",
     "previewItem": null
   },
   {
@@ -155,7 +155,7 @@
     "name": "Scrambled Egg",
     "price": 3.80,
     "filterValue": ["Egg"],
-    "category": "On Top",
+    "category": "Specials",
     "previewItem": null
   },
   {
@@ -170,54 +170,16 @@
     }
   },
   {
-    "id": 21,
-    "name": "Mozzarella",
-    "price": 2.10,
-    "filterValue": ["Lactose"],
-    "category": "Finsiher",
-    "previewItem": {
-      "url": "assets/images/Cheese.png",
-      "index": 1010
-    }
-  },
-  {
-    "id": 22,
-    "name": "Emmental",
-    "price": 2.10,
-    "filterValue": ["Lactose"],
-    "category": "Finsiher",
-    "previewItem": {
-      "url": "assets/images/Cheese.png",
-      "index": 1010
-    }
-  },
-  {
-    "id": 23,
-    "name": "Cheddar",
-    "price": 2.10,
-    "filterValue": ["Lactose"],
-    "category": "Finsiher",
-    "previewItem": {
-      "url": "assets/images/Cheese.png",
-      "index": 1010
-    }
-  },
-  {
     "id": 24,
     "name": "Mushrooms",
     "price": 2.70,
     "filterValue": [],
-    "category": "Finsiher",
+    "category": "Toppings",
     "previewItem": {
       "url": "assets/images/Mushrooms.png",
       "index": 1004
     }
-  }
-
-
-
-
-  ,
+  },
   {
     "id": 30,
     "name": "Dönermeat",
@@ -233,6 +195,39 @@
     "filterValue": ["Lactose"],
     "category": "Other",
     "previewItem": null
+  },
+  {
+    "id": 21,
+    "name": "Mozzarella",
+    "price": 2.10,
+    "filterValue": ["Lactose"],
+    "category": "Finisher",
+    "previewItem": {
+      "url": "assets/images/Cheese.png",
+      "index": 1010
+    }
+  },
+  {
+    "id": 22,
+    "name": "Emmental",
+    "price": 2.10,
+    "filterValue": ["Lactose"],
+    "category": "Finisher",
+    "previewItem": {
+      "url": "assets/images/Cheese_1.png",
+      "index": 1010
+    }
+  },
+  {
+    "id": 23,
+    "name": "Vegan-Cheddar",
+    "price": 2.50,
+    "filterValue": [],
+    "category": "Finisher",
+    "previewItem": {
+      "url": "assets/images/Cheese_2.png",
+      "index": 1010
+    }
   }
 
 ]
