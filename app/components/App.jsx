@@ -29,10 +29,10 @@ class App extends Component {
           <div>
             <Header/>
             <Switch>
-              <Route exact path="/" render={() => this.implementSite(['Home'], <Home/>)} />
-              <Route exact path="/creator" render={() => this.implementSite(['Home', 'Creator'], <Creator/>)} />
-              <Route exact path="/checkout" render={() => this.implementSite(['Home', 'Creator', 'Checkout'], <Checkout/>)} />
-              <Route exact path="/confirmation" render={() => this.implementSite(['Home', 'Creator', 'Checkout', 'Confirmation'], <Confirmation/>)} />
+              <Route exact path="PizzaOrderSystem/" render={() => this.implementSite(['Home'], <Home/>)} />
+              <Route exact path="PizzaOrderSystem/creator" render={() => this.implementSite(['Home', 'Creator'], <Creator/>)} />
+              <Route exact path="PizzaOrderSystem/checkout" render={() => this.implementSite(['Home', 'Creator', 'Checkout'], <Checkout/>)} />
+              <Route exact path="PizzaOrderSystem/confirmation" render={() => this.implementSite(['Home', 'Creator', 'Checkout', 'Confirmation'], <Confirmation/>)} />
               <Route render={() => this.implementSite(['Home', 'Error'], <Errorpage/>)} />
             </Switch>
           </div>
