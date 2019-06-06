@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Chip, Row, Col, Preloader} from 'react-materialize';
 import {AppContext} from './AppContext';
+import { Loader } from './PageContext';
+
 
 class Filter extends Component {
 
@@ -36,7 +38,7 @@ class Filter extends Component {
   //Check for preview images which are active but through filter unchecked
   checkForImages() {
     let { appliedFilter, ingredients } = this.context.state;
-    const { getFilter, getPreviewImgState, disablePreviewImg } = this.context;
+    const { getFilter, getPreviewImgState, disablePreviewImg, setCurrentPrice, getCurrentPrice, calcTotalPrice, getCurrentSize } = this.context;
     let filter = [];
 
     Object.keys(appliedFilter).forEach((key) => {
@@ -45,6 +47,7 @@ class Filter extends Component {
       }
     });
 
+    let price = getCurrentPrice();
     ingredients.map((igd) => {
       const inclItem = !igd.filterValue.some((val) =>
         filter.includes(val)
@@ -52,8 +55,22 @@ class Filter extends Component {
       if(inclItem == false) {
         if(igd.previewItem != null && getPreviewImgState(igd.previewItem.url) != false)
           disablePreviewImg(igd.previewItem.url);
+        if(document.getElementById('igdID_' + igd.id) != null) {
+          if(document.getElementById('igdID_' + igd.id).checked) {
+            price -= igd.price;
+          }
+        }
+
       }
+        /*else {
+          console.log("Deleted Item: " + document.getElementById('igdID_' + igd.id).checked);
+          if(document.getElementById('igdID_' + igd.id).checked) {
+            this.setState({'pizzaprice': this.state.pizzaprice - igd.price});
+          }
+        }*/
     });
+    setCurrentPrice(price);
+    calcTotalPrice(getCurrentSize(), price);
   }
 
   //Changes the background of the tags to show the state if selected or not
@@ -73,9 +90,7 @@ class Filter extends Component {
         {Object.keys(this.context.state.filterData).length != 0 ?
           this.generateFilterTags()
           :
-          <Row className="center">
-            <Col s={4}><Preloader size="small" /></Col>
-          </Row>
+          <Loader/>
         }
       </div>
     );

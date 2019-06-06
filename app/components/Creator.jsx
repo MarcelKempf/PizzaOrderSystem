@@ -1,7 +1,10 @@
 import React, { useContext, Component } from 'react';
 import Filter from './Filter.jsx';
 import {AppContext} from './AppContext';
-import {Checkbox, Row, Col, Preloader} from 'react-materialize';
+import {Checkbox, Chip} from 'react-materialize';
+import { Loader } from './PageContext';
+
+
 
 class Creator extends Component {
 
@@ -9,26 +12,30 @@ class Creator extends Component {
     super(props);
 
     this.handleClick = this.handleCheckboxClick.bind(this);
+    this.handleSizeChange = this.handleSizeChange.bind(this);
   }
 
-  state = {}
 
   //React: Component rendered!
   componentDidMount() {
     this.context.fetchIngredients("assets/database/ingredients.json");
-
   }
 
   //Format double into valid currency format
-  formatter() { return new Intl.NumberFormat('en-AU', {
-    minimumFractionDigits: 2
+  formatter() {
+    return new Intl.NumberFormat('en-AU', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
   })}
 
   handleCheckboxClick(item, input) {
-    const { setPreviewImg } = this.context;
+    const { setPreviewImg, setCurrentPrice, getCurrentPrice, calcTotalPrice } = this.context;
     if(item.previewItem != null) {
       setPreviewImg(item.previewItem.url, input.currentTarget.checked);
     }
+    const currentPrice = getCurrentPrice() + (input.currentTarget.checked ? item.price : (-item.price));
+    setCurrentPrice(currentPrice);
+    calcTotalPrice(this.context.state.size, currentPrice);
   }
 
   groupBy(objectArray, property) {
@@ -42,19 +49,31 @@ class Creator extends Component {
     }, {});
   }
 
-  //onClick={}
+  //Change pizza size (SMALL/MEDIUM/LARGE)
+  handleSizeChange(size) {
+    const { setCurrentSize, calcTotalPrice } = this.context;
+    let prevTag = document.getElementById('purchase_' + this.context.state.size).children[0];
+    let nextTag = document.getElementById('purchase_' + size).children[0];
+    prevTag.style.background = '#e4e4e4';
+    nextTag.style.background = '#d1d1d1';
+    setCurrentSize(size);
+    calcTotalPrice(size);
+  }
+
   generateIngredientTags() {
 
     let { appliedFilter, ingredients } = this.context.state;
     const { getFilter } = this.context;
     let filter = [];
 
+    //Collect all filter values to a filter property
     Object.keys(appliedFilter).forEach((key) => {
       if(appliedFilter[key] == true) {
         getFilter(key).forEach((value) => { if(!filter.includes(value)) filter.push(value) });
       }
     });
 
+    //Build Ingredients
     let filteredIngredients = this.groupBy(ingredients, 'category');
     return Object.keys(filteredIngredients).map((topic, i) => {
       let category = filteredIngredients[topic].map((igd, i) => {
@@ -82,9 +101,7 @@ class Creator extends Component {
               {Object.keys(this.context.state.ingredients).length != 0 ?
                 igd.slice(0, 2)
                 :
-                <Row className="center">
-                  <Col s={4}><Preloader size="small" /></Col>
-                </Row>
+                <Loader/>
               }
           </div>
 
@@ -95,9 +112,7 @@ class Creator extends Component {
                   <img className="preview_item" key={i} src={k} /> : ''
               })
               :
-              <Row className="center">
-                <Col s={4}><Preloader size="small" /></Col>
-              </Row>
+              <Loader/>
             }
           </div>
 
@@ -105,12 +120,16 @@ class Creator extends Component {
               {Object.keys(this.context.state.ingredients).length != 0 ?
                 igd.slice(2)
                 :
-                <Row className="center">
-                  <Col s={4}><Preloader size="small" /></Col>
-                </Row>
+                <Loader/>
               }
           </div>
 
+        </div>
+        <h5 className="pizza_price">{this.context.getTotalPrice() != 0 ? this.formatter().format(this.context.getTotalPrice()) : '0'}$</h5>
+        <div className="purchasebox">
+          <span className="size_tag" id="purchase_Small" onClick={this.handleSizeChange.bind(this, 'Small')}><Chip>S<br/><p> + 0%</p></Chip></span>
+          <span className="size_tag" id="purchase_Medium" onClick={this.handleSizeChange.bind(this, 'Medium')}><Chip>M<br/><p> + 20%</p></Chip></span>
+          <span className="size_tag" id="purchase_Large" onClick={this.handleSizeChange.bind(this, 'Large')}><Chip >L<br/><p> + 30%</p></Chip></span>
         </div>
 
       </div>
@@ -118,6 +137,7 @@ class Creator extends Component {
   }
 
 }
+
 Creator.contextType = AppContext;
 
 

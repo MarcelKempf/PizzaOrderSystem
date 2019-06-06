@@ -55,6 +55,45 @@
         height: auto
         animation: fadeIn .6s ease-out
 
+  .pizza_price
+    padding: .4rem
+    font-weight: 500
+
+  .purchasebox
+
+    .size_tag .chip
+      cursor: pointer
+      display: inline-block
+      user-select: none
+      display: inline-table
+      line-height: 1.5rem
+      font-size: 1.2rem
+      font-weight: 600
+      margin: 0
+      padding: .3rem 0 .2rem
+      width: 5rem
+
+      p
+        font-size: .8rem
+        font-weight: 400
+        line-height: 1.3rem
+
+    .size_tag
+      
+      &:first-child .chip
+        border-top-right-radius: 0
+        border-bottom-right-radius: 0
+        background-color: #d1d1d1
+
+      &:nth-child(2) .chip
+        border-radius: 0
+        border-left: 1px solid grey
+        border-right: 1px solid grey
+
+      &:last-child .chip
+        border-top-left-radius: 0
+        border-bottom-left-radius: 0
+
 @keyframes fadeIn
   from
     transform: translateY(-25px)

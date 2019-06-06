@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Loader } from './PageContext';
+import { LoaderBar } from './PageContext';
 
 export const AppContext = React.createContext();
 
@@ -14,6 +14,9 @@ export class AppProvider extends Component {
     filterData: {},
     appliedFilter: {},
     previewImg: {},
+    size: 'Small',
+    pizzaprice: 0.00,
+    totalprice: 0.00,
     shoppingCart: [],
     ingredients: []
   }
@@ -34,6 +37,32 @@ export class AppProvider extends Component {
   toggleFilterTag = name => { this.setTagStatus(name, !this.getTagStatus(name)); };
 
   getPreviewImgState = url => { this.state.previewImg[url] };
+
+  setCurrentSize = size => { this.setState({ 'size': size}); }
+
+  setCurrentPrice = price => { this.setState({ 'pizzaprice': price}); }
+
+  getTotalPrice = price => this.state.totalprice;
+
+  getCurrentPrice = () => this.state.pizzaprice;
+
+  getCurrentSize = () => this.state.size;
+
+  //CalculatePizzaPrice
+  calcTotalPrice = (size, price = this.state.pizzaprice) => {
+    switch(size) {
+      case 'Small':
+        this.setState({'totalprice': price});
+        break;
+      case 'Medium':
+        this.setState({'totalprice': price * 1.2});
+        break;
+      case 'Large':
+        this.setState({'totalprice': price * 1.3});
+        break;
+    }
+
+  }
 
   setPreviewImg = (url, state) => {
     let preMap = this.state.previewImg;
@@ -60,7 +89,7 @@ export class AppProvider extends Component {
   };
 
   fetchFilterData = url => {
-    Loader.turnLoadingBarOn();
+    LoaderBar.turnLoadingBarOn();
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -72,7 +101,7 @@ export class AppProvider extends Component {
           filterData: data,
           appliedFilter: tags
         });
-        Loader.turnLoadingBarOff();
+        LoaderBar.turnLoadingBarOff();
       })
       .catch((error) => {
         console.log(error);
@@ -80,7 +109,7 @@ export class AppProvider extends Component {
   };
 
   fetchIngredientsData = url => {
-    Loader.turnLoadingBarOn();
+    LoaderBar.turnLoadingBarOn();
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -99,7 +128,7 @@ export class AppProvider extends Component {
           previewImg: previewMap
         });
 
-        Loader.turnLoadingBarOff();
+        LoaderBar.turnLoadingBarOff();
       })
       .catch((error) => {
         console.log(error);
@@ -116,6 +145,12 @@ export class AppProvider extends Component {
           getPreviewImgState: this.getPreviewImgState,
           disablePreviewImg: this.disablePreviewImg,
           enablePreviewImg: this.enablePreviewImg,
+          setCurrentSize: this.setCurrentSize,
+          getCurrentSize: this.getCurrentSize,
+          setCurrentPrice: this.setCurrentPrice,
+          getCurrentPrice: this.getCurrentPrice,
+          calcTotalPrice: this.calcTotalPrice,
+          getTotalPrice: this.getTotalPrice,
           setPreviewImg: this.setPreviewImg,
           togglePreviewImg: this.togglePreviewImg,
           fetchFilter: this.fetchFilterData,

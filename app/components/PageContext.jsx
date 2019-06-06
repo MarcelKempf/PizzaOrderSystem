@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Row, Col, Preloader} from 'react-materialize';
 
 class PageContext extends Component {
 
@@ -8,7 +9,7 @@ class PageContext extends Component {
 
   componentDidMount(){
 
-      Loader.turnLoadingBarOff();
+      LoaderBar.turnLoadingBarOff();
 
   }
 
@@ -20,7 +21,14 @@ class PageContext extends Component {
 
 }
 
-export const Loader = {
+export const Loader = (() => {
+  return (
+    <Row className="center">
+      <Col s={4}><Preloader size="small" /></Col>
+    </Row>);
+});
+
+export const LoaderBar = {
   turnLoadingBarOff: () => {
     const nav = document.querySelector('.navigation_section .page_loading');
     if(nav != null) nav.style.display = 'none';
