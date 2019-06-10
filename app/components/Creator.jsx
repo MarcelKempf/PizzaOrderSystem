@@ -1,8 +1,9 @@
 import React, { useContext, Component } from 'react';
 import Filter from './Filter.jsx';
-import {AppContext} from './AppContext';
-import {Checkbox, Chip} from 'react-materialize';
+import { AppContext } from './AppContext';
+import { Checkbox, Chip, Button, Icon, Modal } from 'react-materialize';
 import { Loader } from './PageContext';
+import { CheckoutCart } from './CheckoutCart';
 
 
 
@@ -13,8 +14,12 @@ class Creator extends Component {
 
     this.handleClick = this.handleCheckboxClick.bind(this);
     this.handleSizeChange = this.handleSizeChange.bind(this);
+    this.handlePurchase = this.handlePurchase.bind(this);
   }
 
+  state = {
+    alert: ''
+  }
 
   //React: Component rendered!
   componentDidMount() {
@@ -60,6 +65,23 @@ class Creator extends Component {
     calcTotalPrice(size);
   }
 
+  //Click on Purchase Button
+  handlePurchase() {
+    const { addItemToCart } = this.context;
+    const pizzaItems = this.context.state.ingredients.filter((igd) => {
+      if(document.getElementById('igdID_' + igd.id) != null) {
+        if( document.getElementById('igdID_' + igd.id).checked ) {
+          return true;
+        }
+      }
+      return false;
+    });
+    if(pizzaItems.length !== 0)
+      addItemToCart(pizzaItems);
+    else
+      this.setState({ alert: 'You must select at least one ingredient!' });
+  }
+
   generateIngredientTags() {
 
     let { appliedFilter, ingredients } = this.context.state;
@@ -92,6 +114,7 @@ class Creator extends Component {
   render() {
     let preMap = Object.keys(this.context.state.previewImg);
     const igd = this.generateIngredientTags();
+    const onCloseModal = { onCloseEnd: () => { this.setState({ alert: ''}); } };
     return(
       <div className='creator'>
         <Filter url="assets/database/tag_filter.json"/>
@@ -126,12 +149,19 @@ class Creator extends Component {
 
         </div>
         <h5 className="pizza_price">{this.context.getTotalPrice() != 0 ? this.formatter().format(this.context.getTotalPrice()) : '0'}$</h5>
-        <div className="purchasebox">
+        <div className="sizebox">
           <span className="size_tag" id="purchase_Small" onClick={this.handleSizeChange.bind(this, 'Small')}><Chip>S<br/><p> + 0%</p></Chip></span>
           <span className="size_tag" id="purchase_Medium" onClick={this.handleSizeChange.bind(this, 'Medium')}><Chip>M<br/><p> + 20%</p></Chip></span>
           <span className="size_tag" id="purchase_Large" onClick={this.handleSizeChange.bind(this, 'Large')}><Chip >L<br/><p> + 30%</p></Chip></span>
-        </div>
-
+      </div>
+      <Modal header="Not possible" options={ onCloseModal } open={this.state.alert != '' ? true : false}><p>{this.state.alert}</p></Modal>
+      <Button className="purchase_btn" type="submit" onClick={this.handlePurchase.bind(this)} waves="light">
+        Add
+        <Icon right>
+          add_shopping_cart
+        </Icon>
+      </Button>
+      <CheckoutCart shoppingCart={this.context.getShoppingCart()}/>
       </div>
     );
   }

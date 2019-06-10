@@ -59,7 +59,7 @@
     padding: .4rem
     font-weight: 500
 
-  .purchasebox
+  .sizebox
 
     .size_tag .chip
       cursor: pointer
@@ -72,6 +72,7 @@
       margin: 0
       padding: .3rem 0 .2rem
       width: 5rem
+      box-shadow: 1px 4px 12px 0px lightgrey
 
       p
         font-size: .8rem
@@ -79,7 +80,7 @@
         line-height: 1.3rem
 
     .size_tag
-      
+
       &:first-child .chip
         border-top-right-radius: 0
         border-bottom-right-radius: 0
@@ -93,6 +94,10 @@
       &:last-child .chip
         border-top-left-radius: 0
         border-bottom-left-radius: 0
+
+  .purchase_btn
+    margin: 1rem 0
+    box-shadow: 1px 4px 12px 0px grey
 
 @keyframes fadeIn
   from
@@ -115,7 +120,7 @@
       grid-template-columns: 33% 17% 17% 33%
       grid-template-areas: "picker1 preview preview picker2"
       grid-template-rows: auto
-      margin: 5rem 0
+      margin: 1rem 0 2rem
 
       .ingredients_picker_1
         grid-area: picker1
