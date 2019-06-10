@@ -7,6 +7,7 @@ export class AppProvider extends Component {
 
   constructor(props){
     super(props);
+    this.cartCount = 0;
     this.fetchFilterData = this.fetchFilterData.bind(this);
   }
 
@@ -48,6 +49,29 @@ export class AppProvider extends Component {
 
   getCurrentSize = () => this.state.size;
 
+  increaseCartCount = () => this.cartCount++;
+  decreaseCartCount = () => this.cartCount--;
+  getCartCount = () => this.cartCount;
+
+  addItemToCart = (items) => {
+    let currentCart = this.getShoppingCart();
+    let cartItem = {
+      size: this.getCurrentSize(),
+      ingredients: items
+    };
+    currentCart[this.getCartCount()] = cartItem;
+    this.setState({ 'shoppingCart': currentCart});
+    this.increaseCartCount();
+  }
+
+  removeItemFromCart = (id) => {
+    let currentCart = this.getShoppingCart();
+    currentCart[id] = undefined;
+    this.setState({ 'shoppingCart': currentCart});
+  }
+
+  getShoppingCart = () => this.state.shoppingCart;
+
   //CalculatePizzaPrice
   calcTotalPrice = (size, price = this.state.pizzaprice) => {
     switch(size) {
@@ -87,6 +111,8 @@ export class AppProvider extends Component {
     preMap[url] = !preMap[url];
     this.setState({ previewImg: preMap });
   };
+
+
 
   fetchFilterData = url => {
     LoaderBar.turnLoadingBarOn();
@@ -149,6 +175,9 @@ export class AppProvider extends Component {
           getCurrentSize: this.getCurrentSize,
           setCurrentPrice: this.setCurrentPrice,
           getCurrentPrice: this.getCurrentPrice,
+          addItemToCart: this.addItemToCart,
+          removeItemFromCart: this.removeItemFromCart,
+          getShoppingCart: this.getShoppingCart,
           calcTotalPrice: this.calcTotalPrice,
           getTotalPrice: this.getTotalPrice,
           setPreviewImg: this.setPreviewImg,
