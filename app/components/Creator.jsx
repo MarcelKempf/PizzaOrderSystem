@@ -12,13 +12,16 @@ class Creator extends Component {
   constructor(props) {
     super(props);
 
-    this.handleClick = this.handleCheckboxClick.bind(this);
-    this.handleSizeChange = this.handleSizeChange.bind(this);
-    this.handlePurchase = this.handlePurchase.bind(this);
+    this.onAddIngredientClick = this.onAddIngredientClick.bind(this);
+    this.onSizeChangeClick = this.onSizeChangeClick.bind(this);
+    this.onAddPizzaClick = this.onAddPizzaClick.bind(this);
+    this.editPizza = this.editPizza.bind(this);
   }
 
   state = {
-    alert: ''
+    alert: '',
+    isEditMode: false,
+    editID: null
   }
 
   //React: Component rendered!
@@ -33,7 +36,38 @@ class Creator extends Component {
       maximumFractionDigits: 2
   })}
 
-  handleCheckboxClick(item, input) {
+  //Edit cartItem
+  editPizza(id, cartItem) {
+    this.setState({ editID: id, isEditMode: true});
+    this.fillIgdCheckboxes(cartItem);
+  }
+
+  //Fill all checkboxes manualy
+  fillIgdCheckboxes(cartItem) {
+    const { setCurrentPrice, setCurrentSize, calcTotalPrice, setPreviewImg, disableAllPreviewImg } = this.context;
+    let price = 0;
+    disableAllPreviewImg();
+    this.context.state.ingredients.forEach((igd) => {
+      //NEED TO PROOF
+      if(document.getElementById('igdID_' + igd.id) != null) {
+        const checkbox = document.getElementById('igdID_' + igd.id);
+        if(cartItem.ingredients.includes(igd)) {
+            checkbox.checked = true;
+            price += igd.price;
+            if(igd.previewItem != null)
+              setPreviewImg(igd.previewItem.url, true);
+        } else {
+          checkbox.checked = false;
+        }
+      }
+    });
+    setCurrentPrice(price);
+    this.onSizeChangeClick(cartItem.size);
+    calcTotalPrice(cartItem.size, price);
+  }
+
+  //Ingredients Checkbox event
+  onAddIngredientClick(item, input) {
     const { setPreviewImg, setCurrentPrice, getCurrentPrice, calcTotalPrice } = this.context;
     if(item.previewItem != null) {
       setPreviewImg(item.previewItem.url, input.currentTarget.checked);
@@ -43,19 +77,8 @@ class Creator extends Component {
     calcTotalPrice(this.context.state.size, currentPrice);
   }
 
-  groupBy(objectArray, property) {
-    return objectArray.reduce(function (acc, obj) {
-      var key = obj[property];
-      if(!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(obj);
-      return acc;
-    }, {});
-  }
-
   //Change pizza size (SMALL/MEDIUM/LARGE)
-  handleSizeChange(size) {
+  onSizeChangeClick(size) {
     const { setCurrentSize, calcTotalPrice } = this.context;
     let prevTag = document.getElementById('purchase_' + this.context.state.size).children[0];
     let nextTag = document.getElementById('purchase_' + size).children[0];
@@ -65,9 +88,9 @@ class Creator extends Component {
     calcTotalPrice(size);
   }
 
-  //Click on Purchase Button
-  handlePurchase() {
-    const { addItemToCart } = this.context;
+  //Click on Pizza Add Button
+  onAddPizzaClick() {
+    const { addItemToCart, setCurrentPrice, calcTotalPrice, getCurrentSize } = this.context;
     const pizzaItems = this.context.state.ingredients.filter((igd) => {
       if(document.getElementById('igdID_' + igd.id) != null) {
         if( document.getElementById('igdID_' + igd.id).checked ) {
@@ -76,10 +99,46 @@ class Creator extends Component {
       }
       return false;
     });
-    if(pizzaItems.length !== 0)
-      addItemToCart(pizzaItems);
-    else
+    if(pizzaItems.length !== 0) {
+      //EDITMODE ACTIVE
+      if(this.state.isEditMode !== null && this.state.editID !== null) {
+        addItemToCart(pizzaItems, this.state.editID);
+        this.setState({ editID: null, isEditMode: false});
+      //NORMAL Adding to shopping cart
+      } else {
+        addItemToCart(pizzaItems);
+      }
+      //Unselect every checkbox
+      this.cleanCheckboxSelection();
+      setCurrentPrice(0);
+      calcTotalPrice(getCurrentSize(), 0);
+    } else
       this.setState({ alert: 'You must select at least one ingredient!' });
+  }
+
+  //Clean up Ingredients Checkbox Selections (uncheck)
+  cleanCheckboxSelection() {
+    this.context.state.ingredients.forEach((igd) => {
+      if(document.getElementById('igdID_' + igd.id) != null) {
+        const checkbox = document.getElementById('igdID_' + igd.id);
+        if(checkbox.checked) {
+          checkbox.checked = false;
+        }
+      }
+    });
+    this.context.disableAllPreviewImg();
+  }
+
+  //Method to group objects
+  groupBy(objectArray, property) {
+    return objectArray.reduce(function (acc, obj) {
+      var key = obj[property];
+      if(!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(obj);
+      return acc;
+    }, {});
   }
 
   generateIngredientTags() {
@@ -101,7 +160,7 @@ class Creator extends Component {
       let category = filteredIngredients[topic].map((igd, i) => {
         const inclItem = !igd.filterValue.some((val) => filter.includes(val));
         if(inclItem == true) {
-          return <span id={'igd_' + igd.id}  key={igd.id}><Checkbox id={'igdID_' + igd.id} onChange={this.handleClick.bind(this, igd)} className="igd_tag" value={igd.name} label={igd.name}></Checkbox>+{this.formatter().format(igd.price)}$ </span>;
+          return <span id={'igd_' + igd.id}  key={igd.id}><Checkbox id={'igdID_' + igd.id} onChange={this.onAddIngredientClick.bind(this, igd)} className="igd_tag" value={igd.name} label={igd.name}></Checkbox>+{this.formatter().format(igd.price)}$ </span>;
         }
         return null;
       });
@@ -150,18 +209,18 @@ class Creator extends Component {
         </div>
         <h5 className="pizza_price">{this.context.getTotalPrice() != 0 ? this.formatter().format(this.context.getTotalPrice()) : '0'}$</h5>
         <div className="sizebox">
-          <span className="size_tag" id="purchase_Small" onClick={this.handleSizeChange.bind(this, 'Small')}><Chip>S<br/><p> + 0%</p></Chip></span>
-          <span className="size_tag" id="purchase_Medium" onClick={this.handleSizeChange.bind(this, 'Medium')}><Chip>M<br/><p> + 20%</p></Chip></span>
-          <span className="size_tag" id="purchase_Large" onClick={this.handleSizeChange.bind(this, 'Large')}><Chip >L<br/><p> + 30%</p></Chip></span>
+          <span className="size_tag" id="purchase_Small" onClick={this.onSizeChangeClick.bind(this, 'Small')}><Chip>S<br/><p> + 0%</p></Chip></span>
+          <span className="size_tag" id="purchase_Medium" onClick={this.onSizeChangeClick.bind(this, 'Medium')}><Chip>M<br/><p> + 20%</p></Chip></span>
+          <span className="size_tag" id="purchase_Large" onClick={this.onSizeChangeClick.bind(this, 'Large')}><Chip >L<br/><p> + 30%</p></Chip></span>
       </div>
       <Modal header="Not possible" options={ onCloseModal } open={this.state.alert != '' ? true : false}><p>{this.state.alert}</p></Modal>
-      <Button className="purchase_btn" type="submit" onClick={this.handlePurchase.bind(this)} waves="light">
-        Add
+      <Button className="purchase_btn" type="submit" onClick={this.onAddPizzaClick.bind(this)} waves="light">
+        { this.state.isEditMode ? 'Update' : 'Add' }
         <Icon right>
           add_shopping_cart
         </Icon>
       </Button>
-      <CheckoutCart shoppingCart={this.context.getShoppingCart()}/>
+      <CheckoutCart value={{editPizza: this.editPizza, removeItemFromCart: this.context.removeItemFromCart}} shoppingCart={this.context.getShoppingCart()}/>
       </div>
     );
   }
