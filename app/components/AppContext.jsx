@@ -53,20 +53,21 @@ export class AppProvider extends Component {
   decreaseCartCount = () => this.cartCount--;
   getCartCount = () => this.cartCount;
 
-  addItemToCart = (items) => {
+  addItemToCart = (items, id = this.getCartCount()) => {
     let currentCart = this.getShoppingCart();
     let cartItem = {
       size: this.getCurrentSize(),
       ingredients: items
     };
-    currentCart[this.getCartCount()] = cartItem;
+    currentCart[id] = cartItem;
     this.setState({ 'shoppingCart': currentCart});
     this.increaseCartCount();
   }
 
   removeItemFromCart = (id) => {
     let currentCart = this.getShoppingCart();
-    currentCart[id] = undefined;
+    delete currentCart[id];
+    //currentCart[id] = undefined;
     this.setState({ 'shoppingCart': currentCart});
   }
 
@@ -112,6 +113,11 @@ export class AppProvider extends Component {
     this.setState({ previewImg: preMap });
   };
 
+  disableAllPreviewImg = () => {
+    let preMap = this.state.previewImg;
+    Object.keys(preMap).forEach((img) => preMap[img] = false);
+    this.setState({ previewImg: preMap});
+  };
 
 
   fetchFilterData = url => {
@@ -181,6 +187,7 @@ export class AppProvider extends Component {
           calcTotalPrice: this.calcTotalPrice,
           getTotalPrice: this.getTotalPrice,
           setPreviewImg: this.setPreviewImg,
+          disableAllPreviewImg: this.disableAllPreviewImg,
           togglePreviewImg: this.togglePreviewImg,
           fetchFilter: this.fetchFilterData,
           fetchIngredients: this.fetchIngredientsData,
