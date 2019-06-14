@@ -7,6 +7,7 @@
     "materialize-css": "^1.0.0",
     "pathmodify": "^0.5.0",
     "react-materialize": "^3.2.2",
+    "react-paypal-express-checkout": "^1.0.5",
     "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
