@@ -1,51 +1,49 @@
 import React, { Component } from 'react';
-import { Icon, Button } from 'react-materialize';
+import { Icon } from 'react-materialize';
 
-export class CheckoutCart extends Component {
-  constructor(props){
-    super(props);
+import CartItem from './CartItem';
+import PayPalButton from './PayPalButton';
 
-  }
+export function CheckoutCart(props) {
+  const {
+    shoppingCart,
+    clearCart,
+    editPizza,
+    removeItemFromCart,
+    currencyFormatter
+  } = props.value;
+  const { history, isOnlyDisplay, state } = props;
+  let totalAmount = 0;
+  let shoppingCartIDs = Object.keys(shoppingCart);
 
-  //Format double into valid currency format
-  formatter() {
-    return new Intl.NumberFormat('en-AU', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-  })}
+  return(<div className="CheckoutCart">
+      <h5 className="shopping_cart_title"><Icon>shopping_cart</Icon>&nbsp;Shopping Cart</h5>
+      {shoppingCartIDs.map((id, index) => {
+        if(index === 0) totalAmount = 0;
+        let item = shoppingCart[id];
+        let domItems = item.ingredients.map((igd, i) => <p key={i} className="pizza_igd"><span>{igd.name}</span> +{currencyFormatter().format(igd.price)}$ &nbsp;</p>);
+        let pizzaPrice = item.ingredients.reduce((total, igd) => (total + igd.price), 0.00);
+        let totalPrice = (item.size == 'Medium' ? 1.2 : (item.size == 'Large' ? 1.3 : 1)) * pizzaPrice;
+        totalAmount += Number(currencyFormatter().format(totalPrice));
 
-  render() {
-    let shoppingCartIDs = Object.keys(this.props.shoppingCart);
-    return(
-      <div className="CheckoutCart">
-        <Icon className="shopping_cart_title">shopping_cart<h5>&nbsp;Shopping Cart</h5></Icon>
-        {shoppingCartIDs.map((id, index) => {
-          let item = this.props.shoppingCart[id];
-          let domItems = item.ingredients.map((igd, i) => <p key={i} className="pizza_igd"><span>{igd.name}</span> +{this.formatter().format(igd.price)}$ &nbsp;</p>);
-          return (<div key={index}  className="cart_item">
-                    <h6>PIZZA
-                      <span className="pizza_size">{item.size}&nbsp;&nbsp;
-                        <span className="pizza_extraprice">{item.size == 'Medium' ? '+ 20%' : (item.size == 'Large' ? '+ 30%': '')}</span>
-                      </span>
-                      <span className="pizza_price">{this.formatter().format((item.size == 'Medium' ? 1.2 : (item.size == 'Large' ? 1.3 : 1)) * item.ingredients.reduce(((total, igd) => total + igd.price), 0.00))}$</span>
-                    </h6>
-                    <div className="pizza_ingredients">{domItems}</div>
-                    <span className="item_actions">
-                      <Button className="edit_item" type="submit" onClick={this.props.value.editPizza.bind(this, id, item)} waves="light"><Icon tiny>edit</Icon></Button>
-                      <Button className="delete_item" type="submit" onClick={this.props.value.removeItemFromCart.bind(this, id)} waves="light"><Icon tiny>delete_forever</Icon></Button>
-                    </span>
-                </div>);
-
-          }
-        )}
-        {shoppingCartIDs.length != 0 ? <Button className="checkout_btn" type="submit" waves="light">
-          Checkout
-          <Icon right>
-            credit_card
-          </Icon>
-        </Button>: ''}
-      </div>
-    )
-  }
-
+        return (<CartItem key={index}
+          id={id} index={index} item={item}
+          domItems={domItems} totalPrice={totalPrice}
+          isOnlyDisplay={isOnlyDisplay}
+          currencyFormatter={currencyFormatter} editPizza={editPizza}
+          removeItemFromCart={removeItemFromCart} >
+        </CartItem>);
+        }
+      )}
+      <p className="total_price">Total: {currencyFormatter().format(totalAmount)}$</p>
+      {shoppingCartIDs.length != 0 && isOnlyDisplay !== true ?
+        <React.Fragment><PayPalButton className="checkout_btn"
+                totalAmount={Number(currencyFormatter().format(totalAmount))}
+                clearCart={clearCart}
+                history={history}
+                shoppingCart={shoppingCart}
+            /><p style={{'fontSize': 10 + 'px'}}>User: pizzabuyer@gmail.com</p>
+            <p style={{'fontSize': 10 + 'px'}}>Password: 12345678</p>
+        </React.Fragment>: ''}
+    </div>);
 }
