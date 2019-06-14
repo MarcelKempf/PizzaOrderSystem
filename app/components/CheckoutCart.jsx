@@ -22,8 +22,20 @@ export class CheckoutCart extends Component {
         {shoppingCartIDs.map((id, index) => {
           let item = this.props.shoppingCart[id];
           let domItems = item.ingredients.map((igd, i) => <p key={i} className="pizza_igd"><span>{igd.name}</span> +{this.formatter().format(igd.price)}$ &nbsp;</p>);
-          console.log(item);
-          return (<div key={index}  className="cart_item"><h6>PIZZA<span className="pizza_size">{item.size}&nbsp;&nbsp;<span className="pizza_extraprice">{item.size == 'Medium' ? '+ 20%' : (item.size == 'Large' ? '+ 30%': '')}</span></span><span className="pizza_price">{this.formatter().format((item.size == 'Medium' ? 1.2 : (item.size == 'Large' ? 1.3 : 1)) * item.ingredients.reduce(((total, igd) => total + igd.price), 0.00))}$</span></h6><div className="pizza_ingredients">{domItems}</div></div>);
+          return (<div key={index}  className="cart_item">
+                    <h6>PIZZA
+                      <span className="pizza_size">{item.size}&nbsp;&nbsp;
+                        <span className="pizza_extraprice">{item.size == 'Medium' ? '+ 20%' : (item.size == 'Large' ? '+ 30%': '')}</span>
+                      </span>
+                      <span className="pizza_price">{this.formatter().format((item.size == 'Medium' ? 1.2 : (item.size == 'Large' ? 1.3 : 1)) * item.ingredients.reduce(((total, igd) => total + igd.price), 0.00))}$</span>
+                    </h6>
+                    <div className="pizza_ingredients">{domItems}</div>
+                    <span className="item_actions">
+                      <Button className="edit_item" type="submit" onClick={this.props.value.editPizza.bind(this, id, item)} waves="light"><Icon tiny>edit</Icon></Button>
+                      <Button className="delete_item" type="submit" onClick={this.props.value.removeItemFromCart.bind(this, id)} waves="light"><Icon tiny>delete_forever</Icon></Button>
+                    </span>
+                </div>);
+
           }
         )}
         {shoppingCartIDs.length != 0 ? <Button className="checkout_btn" type="submit" waves="light">
