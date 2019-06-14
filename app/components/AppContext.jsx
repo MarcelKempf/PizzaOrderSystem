@@ -73,6 +73,8 @@ export class AppProvider extends Component {
 
   getShoppingCart = () => this.state.shoppingCart;
 
+  clearShoppingCart = () => this.setState({ 'shoppingCart': [] });;
+
   //CalculatePizzaPrice
   calcTotalPrice = (size, price = this.state.pizzaprice) => {
     switch(size) {
@@ -119,6 +121,10 @@ export class AppProvider extends Component {
     this.setState({ previewImg: preMap});
   };
 
+  formatter = () => new Intl.NumberFormat('en-AU', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 
   fetchFilterData = url => {
     LoaderBar.turnLoadingBarOn();
@@ -184,11 +190,13 @@ export class AppProvider extends Component {
           addItemToCart: this.addItemToCart,
           removeItemFromCart: this.removeItemFromCart,
           getShoppingCart: this.getShoppingCart,
+          clearShoppingCart: this.clearShoppingCart,
           calcTotalPrice: this.calcTotalPrice,
           getTotalPrice: this.getTotalPrice,
           setPreviewImg: this.setPreviewImg,
           disableAllPreviewImg: this.disableAllPreviewImg,
           togglePreviewImg: this.togglePreviewImg,
+          currencyFormatter: this.formatter,
           fetchFilter: this.fetchFilterData,
           fetchIngredients: this.fetchIngredientsData,
           toggleFilterTag: this.toggleFilterTag
