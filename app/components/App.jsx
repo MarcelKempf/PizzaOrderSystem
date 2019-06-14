@@ -30,9 +30,8 @@ class App extends Component {
             <Header/>
             <Switch>
               <Route exact path="/" render={() => this.implementSite(['Home'], <Home/>)} />
-              <Route exact path="/creator" render={() => this.implementSite(['Home', 'Creator'], <Creator/>)} />
-              <Route exact path="/checkout" render={() => this.implementSite(['Home', 'Creator', 'Checkout'], <Checkout/>)} />
-              <Route exact path="/confirmation" render={() => this.implementSite(['Home', 'Creator', 'Checkout', 'Confirmation'], <Confirmation/>)} />
+              <Route exact path="/creator" render={(props) => this.implementSite(['Home', 'Creator'], <Creator history={props.history}/>) } />
+              <Route exact path="/creator/confirmation" render={(props) => this.implementSite(['Home', 'Creator', 'Confirmation'], <Confirmation {...props}/>)} />
               <Route render={() => this.implementSite(['Home', 'Error'], <Errorpage/>)} />
             </Switch>
           </div>
