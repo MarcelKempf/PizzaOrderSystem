@@ -29,12 +29,6 @@ class Creator extends Component {
     this.context.fetchIngredients("assets/database/ingredients.json");
   }
 
-  //Format double into valid currency format
-  formatter() {
-    return new Intl.NumberFormat('en-AU', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-  })}
 
   //Edit cartItem
   editPizza(id, cartItem) {
@@ -144,7 +138,7 @@ class Creator extends Component {
   generateIngredientTags() {
 
     let { appliedFilter, ingredients } = this.context.state;
-    const { getFilter } = this.context;
+    const { getFilter, currencyFormatter } = this.context;
     let filter = [];
 
     //Collect all filter values to a filter property
@@ -160,7 +154,7 @@ class Creator extends Component {
       let category = filteredIngredients[topic].map((igd, i) => {
         const inclItem = !igd.filterValue.some((val) => filter.includes(val));
         if(inclItem == true) {
-          return <span id={'igd_' + igd.id}  key={igd.id}><Checkbox id={'igdID_' + igd.id} onChange={this.onAddIngredientClick.bind(this, igd)} className="igd_tag" value={igd.name} label={igd.name}></Checkbox>+{this.formatter().format(igd.price)}$ </span>;
+          return <span id={'igd_' + igd.id}  key={igd.id}><Checkbox id={'igdID_' + igd.id} onChange={this.onAddIngredientClick.bind(this, igd)} className="igd_tag" value={igd.name} label={igd.name}></Checkbox>+{currencyFormatter().format(igd.price)}$ </span>;
         }
         return null;
       });
@@ -173,6 +167,7 @@ class Creator extends Component {
   render() {
     let preMap = Object.keys(this.context.state.previewImg);
     const igd = this.generateIngredientTags();
+    const { currencyFormatter } = this.context;
     const onCloseModal = { onCloseEnd: () => { this.setState({ alert: ''}); } };
     return(
       <div className='creator'>
@@ -207,12 +202,12 @@ class Creator extends Component {
           </div>
 
         </div>
-        <h5 className="pizza_price">{this.context.getTotalPrice() != 0 ? this.formatter().format(this.context.getTotalPrice()) : '0'}$</h5>
+        <h5 className="pizza_price">{this.context.getTotalPrice() != 0 ? currencyFormatter().format(this.context.getTotalPrice()) : '0'}$</h5>
         <div className="sizebox">
           <span className="size_tag" id="purchase_Small" onClick={this.onSizeChangeClick.bind(this, 'Small')}><Chip>S<br/><p> + 0%</p></Chip></span>
           <span className="size_tag" id="purchase_Medium" onClick={this.onSizeChangeClick.bind(this, 'Medium')}><Chip>M<br/><p> + 20%</p></Chip></span>
           <span className="size_tag" id="purchase_Large" onClick={this.onSizeChangeClick.bind(this, 'Large')}><Chip >L<br/><p> + 30%</p></Chip></span>
-      </div>
+        </div>
       <Modal header="Not possible" options={ onCloseModal } open={this.state.alert != '' ? true : false}><p>{this.state.alert}</p></Modal>
       <Button className="purchase_btn" type="submit" onClick={this.onAddPizzaClick.bind(this)} waves="light">
         { this.state.isEditMode ? 'Update' : 'Add' }
@@ -220,7 +215,7 @@ class Creator extends Component {
           add_shopping_cart
         </Icon>
       </Button>
-      <CheckoutCart value={{editPizza: this.editPizza, removeItemFromCart: this.context.removeItemFromCart}} shoppingCart={this.context.getShoppingCart()}/>
+      <CheckoutCart history={this.props.history} value={{editPizza: this.editPizza, removeItemFromCart: this.context.removeItemFromCart, clearCart: this.context.clearShoppingCart, shoppingCart: this.context.getShoppingCart(), currencyFormatter: currencyFormatter }}></CheckoutCart>
       </div>
     );
   }
