@@ -5,6 +5,11 @@ import { buildLink } from './SiteLink.jsx';
 
 class Navigation extends Component {
 
+  constructor(props){
+    super(props);
+  
+  }
+
   componentDidMount() {
     let scrollBox = document.querySelector('.navigation_section .teal .col');
     if(scrollBox != null) scrollBox.scrollLeft = 9999;
